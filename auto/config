@@ -1,0 +1,13 @@
+#!/bin/sh
+set -e
+
+lb config \
+  --mode debian \
+  --distribution bookworm \
+  --architectures i386 \
+  --binary-images iso-hybrid \
+  --debian-installer none \
+  --archive-areas "main contrib non-free non-free-firmware" \
+  --linux-flavours 686-pae \
+  --bootappend-live "boot=live components locales=ar_MA.UTF-8,en_US.UTF-8 keyboard-layouts=ara,us" \
+  --iso-volume "KHALID_OS_CLOUD"
