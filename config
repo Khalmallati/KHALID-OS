@@ -1,0 +1,3 @@
+#!/bin/sh
+set -e
+lb config noauto --mode debian --system live --distribution bookworm --architectures i386 --binary-images iso-hybrid --archive-areas "main contrib non-free-firmware" --debian-installer live --debian-installer-gui false --bootappend-live "boot=live components hostname=khalid-os-cloud username=khalid locales=ar_MA.UTF-8,en_US.UTF-8 keyboard-layouts=ara,us" --iso-application "KHALID OS Cloud" --iso-volume "KHALID_CLOUD_1_0" --iso-publisher "Khalid El Mallaty" --iso-preparer "KHALID OS Build System" --apt-recommends false

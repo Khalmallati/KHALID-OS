@@ -1,0 +1,7 @@
+PRETTY_NAME="KHALID OS Cloud 1.0"
+NAME="KHALID OS Cloud"
+VERSION_ID="1.0"
+VERSION="1.0 (Bookworm)"
+VERSION_CODENAME=bookworm
+ID=khalid-os-cloud
+ID_LIKE=debian

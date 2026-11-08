@@ -1,0 +1,30 @@
+#!/usr/bin/env python3
+import json,pathlib,urllib.request
+cfg=pathlib.Path.home()/".config/khalid-ai/.env"
+def settings():
+ d={}
+ if cfg.exists():
+  for line in cfg.read_text().splitlines():
+   if "=" in line and not line.lstrip().startswith("#"):
+    k,v=line.split("=",1);d[k.strip()]=v.strip().strip('"').strip("'")
+ return d
+def local(q):
+ if any(x in q.lower() for x in ["مرحبا","السلام","hello"]): return "مرحباً! أنا KHALID AI. كيف أساعدك؟"
+ if any(x in q for x in ["جدول","وقت","مهام","خطة"]): return "اكتب هدفك والوقت المتاح لنقسم العمل إلى خطوات عملية."
+ return "أنت في الوضع المحلي الأساسي. أضف إعدادات API اختيارية للمساعدة السحابية المتقدمة."
+def cloud(q,c):
+ b=c.get("BASE_URL","").rstrip("/");k=c.get("API_KEY","");m=c.get("MODEL","")
+ if not all((b,k,m)): return None
+ data=json.dumps({"model":m,"messages":[{"role":"system","content":"أنت KHALID AI، مساعد عربي عملي."},{"role":"user","content":q}]}).encode()
+ req=urllib.request.Request(b+"/chat/completions",data=data,headers={"Authorization":"Bearer "+k,"Content-Type":"application/json"})
+ try:
+  with urllib.request.urlopen(req,timeout=35) as r:return json.loads(r.read())["choices"][0]["message"]["content"]
+ except Exception as e:return "تعذر الاتصال: "+str(e)
+def main():
+ c=settings();print("KHALID AI | اكتب خروج للإنهاء")
+ while True:
+  try:q=input("\nأنت: ").strip()
+  except (EOFError,KeyboardInterrupt):break
+  if q.lower() in ("خروج","exit","quit"):break
+  if q:print("\nKHALID AI: "+(cloud(q,c) or local(q)))
+if __name__=="__main__":main()

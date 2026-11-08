@@ -1,0 +1,7 @@
+#!/bin/sh
+set -e
+install -D -m 0755 /usr/share/khalid-os/khalid-ai /usr/local/bin/khalid-ai
+mkdir -p /etc/skel/Desktop
+cp /usr/share/applications/khalid-home.desktop /etc/skel/Desktop/
+cp /usr/share/applications/khalid-ai.desktop /etc/skel/Desktop/
+chmod +x /etc/skel/Desktop/*.desktop
